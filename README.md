@@ -1,17 +1,17 @@
 # Speech-to-Text-WaveNet : End-to-end sentence level English speech recognition using DeepMind's WaveNet
-A tensorflow implementation of speech recognition based on DeepMind's [WaveNet: A Generative Model for Raw Audio](https://arxiv.org/abs/1609.03499). (Hereafter the Paper)
+A TensorFlow implementation of speech recognition based on DeepMind's [WaveNet: A Generative Model for Raw Audio](https://arxiv.org/abs/1609.03499). (Hereafter the Paper)
 
-Although [ibab](https://github.com/ibab/tensorflow-wavenet) and [tomlepaine](https://github.com/tomlepaine/fast-wavenet) have already implemented WaveNet with tensorflow, they did not implement speech recognition. That's why we decided to implement it ourselves. 
+Although [ibab](https://github.com/ibab/tensorflow-wavenet) and [tomlepaine](https://github.com/tomlepaine/fast-wavenet) have already implemented WaveNet with TensorFlow, they did not implement speech recognition. That's why we decided to implement it ourselves. 
 
-Some of Deepmind's recent papers are tricky to reproduce. The Paper also omitted specific details about the implementation, and we had to fill the gaps in our own way.
+Some of Deepmind's recent papers are tricky to reproduce. The Paper also omitted specific details about the implementation, and we had to fill the gaps in our way.
 
 Here are a few important notes.
 
 First, while the Paper used the TIMIT dataset for the speech recognition experiment, we used the free VTCK dataset.
 
-Second, the Paper added a mean-pooling layer after the dilated convolution layer for down-sampling. We extracted [MFCC](https://en.wikipedia.org/wiki/Mel-frequency_cepstrum) from wav files and removed the final mean-pooling layer because the original setting was impossible to run on our TitanX GPU.
+Second, the Paper added a mean-pooling layer after the dilated convolution layer for down-sampling. We extracted [MFCC](https://en.wikipedia.org/wiki/Mel-frequency_cepstrum) from wav files and removed the final mean-pooling layer because of the original setting was impossible to run on our TitanX GPU.
 
-Third, since the TIMIT dataset has phoneme labels, the Paper trained the model with two loss terms, phoneme classification and next phoneme prediction. We, instead, used a single CTC loss because VCTK provides sentence-level labels. As a result, we used only dilated conv1d layers without any dilated conv1d layers.
+Third, since the TIMIT dataset has phoneme labels, the Paper trained the model with two-loss terms, phoneme classification and next phoneme prediction. We, instead, used a single CTC loss because VCTK provides sentence-level labels. As a result, we used only dilated conv1d layers without any dilated conv1d layers.
 
 Finally, we didn't do quantitative analyses such as BLEU score and post-processing by combining a language model due to the time constraints.
 
